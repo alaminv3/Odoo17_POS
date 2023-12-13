@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="inherit.sign.SignItemCustomPopover" t-inherit="sign.SignItemCustomPopover" t-inherit-mode="extension">
+        <xpath expr="//Record[@t-props='recordProps']/div[last()]" position="after">
+            <div class="mb-2">
+                <label for="o_sign_model_model_select_input" class="fw-bold">Model</label>
+                <div class="o_field_widget d-block" id="o_sign_model_model_select_input">
+                    <Many2OneField t-props="getMany2XProps(record, 'model_id')" update="(value) => record.update(value)" canOpen="false"/>
+                </div>
+            </div>
+        </xpath>
+    </t>
+
+    <div t-name="inherit.sign.Template" t-inherit="sign.Template" t-inherit-mode="extension" class="d-flex flex-column h-100">
+        <xpath expr="//SignTemplateBody" position="attributes">
+            <attribute name="signModels">signModels</attribute>
+        </xpath>
+    </div>
+</templates>

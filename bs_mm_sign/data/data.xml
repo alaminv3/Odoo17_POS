@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr.model_hr_employee" model="ir.model">
+            <field name="website_form_key">hr_employee</field>
+            <field name="website_form_access">True</field>
+            <field name="website_form_label">Update a Employee</field>
+        </record>
+        <function model="ir.model.fields" name="formbuilder_whitelist">
+            <value>hr.employee</value>
+            <value eval="[]"/>
+        </function>
+    </data>
+</odoo>

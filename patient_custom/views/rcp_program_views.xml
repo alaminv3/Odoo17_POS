@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_rcp_program_tree" model="ir.ui.view">
+        <field name="name">rcp.program.tree</field>
+        <field name="model">rcp.program</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" string="Programs">
+                <field name="name" required="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_rcp_program_form" model="ir.ui.view">
+        <field name="name">rcp.program.form</field>
+        <field name="model">rcp.program</field>
+        <field name="arch" type="xml">
+            <form string="Program">
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_rcp_program" model="ir.actions.act_window">
+        <field name="name">RCP Program</field>
+        <field name="res_model">rcp.program</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_rcp_program" parent ="contacts.res_partner_menu_config"
+                action="action_rcp_program" name="RCP Programs" sequence='4'/>    
+</odoo>

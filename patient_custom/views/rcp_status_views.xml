@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_rcp_status_tree" model="ir.ui.view">
+        <field name="name">rcp.status.tree</field>
+        <field name="model">rcp.status</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" string="Status">
+                <field name="name" required="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_rcp_status_form" model="ir.ui.view">
+        <field name="name">rcp.status.form</field>
+        <field name="model">rcp.status</field>
+        <field name="arch" type="xml">
+            <form string="Status">
+                <sheet>
+                    <group>
+                        <field name="name" required="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_rcp_status" model="ir.actions.act_window">
+        <field name="name">RCP Status</field>
+        <field name="res_model">rcp.status</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_rcp_status" parent ="contacts.res_partner_menu_config"
+                action="action_rcp_status" name="RCP Status" sequence='4'/>    
+</odoo>

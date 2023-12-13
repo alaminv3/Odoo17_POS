@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <!-- Inherits Form View -->
+    <record id="schedule_activity_form_view_inherit_from_jt_crm_activity_configurator_extension" model="ir.ui.view">
+        <field name="name">schedule.activity.form.inherit</field>
+        <field name="model">schedule.auto.activity</field>
+        <field name="inherit_id" ref="jt_crm_activity_configurator.schedule_activity_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_mandatory']" position="after">
+                <field name="assign_automatically"/>
+            </xpath>
+        </field>
+    </record>
+    
+</odoo>

@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <!-- Inherit Sign template Form View to Modify it -->
+        <record id="inherited_sign_item_tree_view" model="ir.ui.view">
+            <field name="name">Sign Item tree view</field>
+            <field name="model">sign.item</field>
+            <field name="inherit_id" ref="sign.sign_item_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type_id']" position="before">
+                    <field name="name"/>
+                    <field name="option_ids" widget="many2many_tags"/>
+                </xpath>
+                <xpath expr="//field[last()]" position="after">
+                    <field name="model_id"/>
+                    <field name="field_id"/>
+                    <field name="field_action"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

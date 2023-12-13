@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="s_custom_header" name="Custom Header">
+        <section>
+            <div class="container">
+                <h3>This is Hello World...</h3>
+            </div>
+        </section>
+    </template>
+
+    <template id="snippets" inherit_id="website.snippets">
+        <xpath expr="//t[@t-snippet='website.s_banner']" position="before">
+            <t t-snippet="bs_mm_sign.s_custom_header" t-thumbnail="/bs_mm_sign/static/src/img/Welcome_heading.svg" string="S_Header">
+                <keywords>hero, jumbotron</keywords>
+            </t>
+        </xpath>
+    </template>
+</odoo>

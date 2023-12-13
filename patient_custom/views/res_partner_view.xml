@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action to Show Patient's Devices -->
+<!--    <record id="act_res_partner_2_stock_production_lot_patient_custom" model="ir.actions.act_window">-->
+<!--        <field name="name">Patient's Devices</field>-->
+<!--        <field name="res_model">stock.production.lot</field>-->
+<!--        <field name="view_mode">tree,form,graph</field>-->
+<!--        <field name="context">{'default_patient_stored_id': active_id}</field>-->
+<!--        <field name="help" type="html">-->
+<!--          <p class="o_view_nocontent_smiling_face">-->
+<!--            Assign a Device to this Patient!-->
+<!--          </p><p>-->
+<!--            Once a Device is Assigned to a Patient, It'll be Visible Here.-->
+<!--          </p>-->
+<!--        </field>-->
+<!--    </record>-->
+    <!-- Action to Show Practice's Devices -->
+<!--    <record id="act_res_partner_practice_2_stock_production_lot_patient_custom" model="ir.actions.act_window">-->
+<!--        <field name="name">Practice's Devices</field>-->
+<!--        <field name="res_model">stock.production.lot</field>-->
+<!--        <field name="view_mode">tree,form,graph</field>-->
+<!--        <field name="context">{'search_default_rcp_practice_id': active_id, 'default_rcp_practice_id': active_id}</field>-->
+<!--        <field name="help" type="html">-->
+<!--          <p class="o_view_nocontent_smiling_face">-->
+<!--            Assign a Device to this Practice!-->
+<!--          </p><p>-->
+<!--            Once a Device is Assigned to a Practice, It'll be Visible Here.-->
+<!--          </p>-->
+<!--        </field>-->
+<!--    </record>-->
+    <!-- Action to Show rcp_organization's Devices -->
+<!--    <record id="act_res_partner_organization_2_stock_production_lot_patient_custom" model="ir.actions.act_window">-->
+<!--        <field name="name">Organization's Devices</field>-->
+<!--        <field name="res_model">stock.production.lot</field>-->
+<!--        <field name="view_mode">tree,form,graph</field>-->
+<!--        <field name="context">{'search_default_rcp_organization_id': active_id, 'default_rcp_organization_id': active_id}</field>-->
+<!--        <field name="help" type="html">-->
+<!--            <p class="o_view_nocontent_smiling_face">-->
+<!--            Assign a Device to this Organization!-->
+<!--            </p><p>-->
+<!--            Once a Device is Assigned to a Organization, It'll be Visible Here.-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+    <!-- Action to Show Sales Partner's Devices -->
+<!--    <record id="act_res_partner_sales_partner_2_stock_production_lot_patient_custom" model="ir.actions.act_window">-->
+<!--        <field name="name">Partner's Devices</field>-->
+<!--        <field name="res_model">stock.production.lot</field>-->
+<!--        <field name="view_mode">tree,form,graph</field>-->
+<!--        <field name="context">{'search_default_rcp_sales_partner': active_id, 'default_rcp_sales_partner': active_id}</field>-->
+<!--        <field name="help" type="html">-->
+<!--          <p class="o_view_nocontent_smiling_face">-->
+<!--            Assign a Device to this Partner!-->
+<!--          </p><p>-->
+<!--            Once a Device is Assigned to a Partner, It'll be Visible Here.-->
+<!--          </p>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record id="view_res_partner_pivot" model="ir.ui.view">
+        <field name="name">res.partner.pivot</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <pivot string="Contacts">
+                <field name="name" type="row"/>
+                <!-- <field name="date" type="col"/> -->
+            </pivot>
+        </field>
+    </record>
+
+    <record id="res_partner_form_view_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.view.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- PHI Details Tab -->
+            <xpath expr="//form/sheet/notebook" position="inside">
+                <page name="phi" string="PHI Details">
+                    <group>
+                        <group>
+                            <field name="is_patient"/>
+                            <field name="rcp_practice" invisible="is_patient == True"/>
+                            <field name="rcp_staff" invisible="is_patient == True"/>
+                            <field name="rcp_medical_provider" invisible="is_patient == True"/>
+                            <field name="rcp_organization" invisible="is_patient == True"/>
+                            <field name="rcp_sales_partner" invisible="is_patient == True"/>
+                            <field name="rcp_medical_record_number" invisible="is_patient != True" readonly="is_patient == True"/>
+                            <field name="rcp_patient_birthday" invisible="is_patient != True" readonly="is_patient == True"/>
+                        </group>
+                        <group>
+                            <field name="rcp_program_group" invisible="is_patient != True" readonly="is_patient == True"/>
+                        </group>
+                    </group>
+                </page>
+                <page name="insurance_info" string="Insurance Information" invisible="is_patient == False">
+                    <group>
+                        <group>
+                            <field name="primary_subscriber_id" readonly="1"/>
+                            <field name="primary_carrier" readonly="1"/>
+                            <field name="primary_group_name" readonly="1"/>
+                            <field name="primary_group_number" readonly="1"/>
+                            <field name="primary_relationship" readonly="1"/>
+                            <field name="primary_start_date" readonly="1"/>
+                            <field name="primary_subscriber_name" readonly="1"/>
+                            <field name="primary_subscriber_birthdate" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="secondary_subscriber_id" readonly="1"/>
+                            <field name="secondary_carrier" readonly="1"/>
+                            <field name="secondary_group_name" readonly="1"/>
+                            <field name="secondary_group_number" readonly="1"/>
+                            <field name="secondary_relationship" readonly="1"/>
+                            <field name="secondary_start_date" readonly="1"/>
+                            <field name="secondary_subscriber_name" readonly="1"/>
+                            <field name="secondary_subscriber_birthdate" readonly="1"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <!-- Removing Base Fields -->
+            <xpath expr="//field[@name='title']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='website']" position="replace">
+            </xpath>
+            <!-- Redesign Left -->
+            <xpath expr="//field[@name='vat']" position="replace">
+                <field name="lang" readonly="is_patient == True"/>
+                <field name="tz" readonly="is_patient == True"/>
+                <field name="vat" invisible="is_patient == True"/>
+                <field name="rcp_warehouse_id" invisible="rcp_practice == False"/>
+                <field name="rcp_uuid" groups="base.group_no_one" readonly="1"/>
+                <field name="rcp_order_uuid" groups="base.group_no_one" readonly="1"/>
+            </xpath>
+            <!-- Redesign Right-->
+            <xpath expr="//field[@name='function']" position="replace">
+                <field name="rcp_patient_gender" invisible="is_patient != True" readonly="is_patient == True"/>
+                <field name="website" widget="url" string="Website" invisible="is_patient == True"/>
+                <field name="rcp_patient_url" widget="url" invisible="is_patient == False"/>
+                <field name="function" invisible="is_patient == True"/>
+                <!--This below fields is inherited in this same file please review before change in fields view-->
+                <field name="rcp_practice_id" domain="[('rcp_practice', '=', True)]" invisible="is_patient != True" readonly="is_patient == True"/>
+                <field name="rcp_medical_id" domain="[('rcp_medical_provider', '=', True)]" invisible="is_patient != True" readonly="is_patient == True"/>
+                <field name="rcp_medical_coach_id" domain="[('rcp_medical_provider', '=', True)]" invisible="is_patient != True" readonly="is_patient == True"/>
+                <field name="rcp_organization_id" domain="[('rcp_organization', '=', True)]" invisible="is_patient != True" readonly="is_patient == True"/>
+                <field name="rcp_medical_billing_id" domain="[('rcp_medical_provider', '=', True)]" invisible="is_patient != True" readonly="is_patient == True"/>
+                <field name="rcp_sales_partner_id" domain="[('rcp_sales_partner', '=', True)]" invisible="is_patient != True" readonly="is_patient == True"/>
+                <!--**************************************************-->
+                <field name="rcp_fax" invisible="is_patient == True" widget="phone"/>
+            </xpath>
+            <!--xpath expr="//field[@name='child_ids']/form/sheet/group/group[3]"
+                   position="after"-->
+            <xpath expr="//field[@name='child_ids']//form/sheet/group/group[2]" position="after">
+                <group string="Partner Type">
+                    <field name="is_patient"/>
+                </group>
+            </xpath>
+            <!--     add chatter       -->
+<!--            <xpath expr="//sheet" position="after">-->
+<!--                <div class="oe_chatter">-->
+<!--                    <field name="message_follower_ids"/>-->
+<!--                    <field name="activity_ids"/>-->
+<!--                    <field name="message_ids"/>-->
+<!--                </div>-->
+<!--            </xpath>-->
+            <!--div name="button_box" position="inside">
+                <button class="oe_stat_button" type="object" name="action_view_patient_devices"
+                    icon="fa-mobile" attrs="{'invisible': [('is_patient', '=', False)]}">
+                    <field string="Devices" name="rcp_device_count" widget="statinfo"/>
+                </button>
+            </div-->
+        </field>
+    </record>
+<!--
+    <record id="res_partner_form_view_inherit_for_group" model="ir.ui.view">
+        <field name="name">res.partner.form.view.inherit.for.group</field>
+        <field name="model">res.partner</field>
+        <field name="groups_id" eval="[(4,ref('patient_custom.group_patient_editable'))]"/>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="patient_custom.res_partner_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <field name="rcp_practice_id" position="attributes">
+                <attribute name="attrs">{'invisible': [('is_patient', '!=', True)]}</attribute>
+            </field>
+            <field name="rcp_medical_id" position="attributes">
+                <attribute name="attrs">{'invisible': [('is_patient', '!=', True)]}</attribute>
+            </field>
+            <field name="rcp_medical_coach_id" position="attributes">
+                <attribute name="attrs">{'invisible': [('is_patient', '!=', True)]}</attribute>
+            </field>
+            <field name="rcp_organization_id" position="attributes">
+                <attribute name="attrs">{'invisible': [('is_patient', '!=', True)]}</attribute>
+            </field>
+            <field name="rcp_medical_billing_id" position="attributes">
+                <attribute name="attrs">{'invisible': [('is_patient', '!=', True)]}</attribute>
+            </field>
+            <field name="rcp_sales_partner_id" position="attributes">
+                <attribute name="attrs">{'invisible': [('is_patient', '!=', True)]}</attribute>
+            </field>
+        </field>
+    </record> -->
+
+    <record id="rom_view_partner_tree_inherit" model="ir.ui.view">
+        <field name="name">rom.view.partner.tree.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree" />
+        <field name="arch" type="xml">
+            <field name="country_id" position="after">
+                <field name="is_patient" invisible='1'/>
+                <field name="rcp_patient_url" widget="url"  optional="hide"/>
+                <field name="rcp_practice_id" optional="hide"/>
+                <field name="rcp_medical_id" optional="hide"/>
+                <field name="rcp_medical_coach_id" optional="hide"/>
+                <field name="rcp_organization_id" optional="hide"/>
+                <field name="rcp_medical_billing_id" optional="hide"/>
+                <field name="rcp_sales_partner_id" optional="hide"/>
+<!--                <field name="rcp_contact_type_id" optional="hide"/>-->
+            </field>
+            <xpath expr="//field[@name='email']" position="after">
+                <field name="rcp_patient_birthday"/>
+                <field name="rcp_medical_record_number"/>
+                <field name="rcp_program_group"/>
+                <field name="rcp_patient_gender"/>
+                <field name="rcp_warehouse_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="rcp_search_view_partner_inherit" model="ir.ui.view">
+        <field name="name">rcp.view.partner.search.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="//search/field[@name='name']" position="after">
+                <field name="rcp_practice_id"/>
+                <field name="rcp_organization_id"/>
+                <field name="rcp_sales_partner_id"/>
+                <field name="rcp_patient_birthday"/>
+                <field name="rcp_medical_record_number"/>
+                <filter string="Practices" name="filter_rcp_practice" domain="[('rcp_practice','=', True)]"/>
+                <filter string="Staff" name="filter_rcp_staff" domain="[('rcp_staff','=', True)]"/>
+                <filter string="Medical Providers" name="filter_rcp_medical_provider" domain="[('rcp_medical_provider','=', True)]"/>
+                <filter string="Organizations" name="filter_rcp_organization" domain="[('rcp_organization','=', True)]"/>
+                <filter string="Sales Partners" name="filter_rcp_sales_partner" domain="[('rcp_sales_partner','=', True)]"/>
+            </xpath>
+
+<!--            No such field found in model during migration-->
+<!--            <xpath expr="//field[@name='name']" position="before">-->
+<!--                <field name="firstname"/>-->
+<!--                <field name="lastname"/>-->
+<!--            </xpath>-->
+            <xpath expr="//filter[@name='group_country']" position="after">
+                <separator/>
+                <filter name="group_rcp_practice" string="Practice" context="{'group_by': 'rcp_practice_id'}"/>
+                <filter name="group_rcp_organization" string="Organization" context="{'group_by': 'rcp_organization_id'}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="rom_res_partner_kanban_view_inherit" model="ir.ui.view">
+        <field name="name">rom.res.partner.kanban.view.inheri</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.res_partner_kanban_view" />
+        <field name="arch" type="xml">
+            <field name="country_id" position="after">
+                <field name="is_patient" invisible='1'/>
+            </field>
+        </field>
+    </record>
+
+    <record id="contacts.action_contacts" model="ir.actions.act_window">
+        <field name="name">Contacts</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,tree,form,activity,pivot</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="context">{'default_is_company': True}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a Contact in your address book
+          </p><p>
+            Odoo helps you track all activities related to your contacts.
+          </p>
+        </field>
+    </record>
+</odoo>

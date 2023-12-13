@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="romtech_view_users_form_inherit" model="ir.ui.view">
+        <field name="name">romtech.view.users.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id"
+               ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='access_rights']"
+                   position="before">
+                <page string="Roles">
+                    <group>
+                        <field name="role_template"/>
+                        <field name="role_user_id"
+                               invisible="role_template == True or active == False"
+                               domain="[('role_template','=',True),('active', '=', False)]"
+                               context="{'form_view_ref': 'base.view_users_form'}"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_update_right" model="ir.actions.server">
+        <field name="name">Update Access Rights</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="binding_model_id" ref="base.model_res_users"/>
+        <field name="binding_view_types">form,list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.update_rights()</field>
+    </record>
+</odoo>
